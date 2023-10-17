@@ -82,41 +82,30 @@ module user_project_wrapper #(
 /* User project is instantiated  here   */
 /*--------------------------------------*/
 
-user_proj_example mprj (
+wb_buttons_leds wb_buttons_leds(
 `ifdef USE_POWER_PINS
-	.vccd1(vccd1),	// User area 1 1.8V power
-	.vssd1(vssd1),	// User area 1 digital ground
+    .vccd1(vccd1),
+    .vssd1(vssd1),
 `endif
+    .clk(wb_clk_i),
+    .reset(wb_rst_i),
 
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
+    // wb interface
+    .i_wb_cyc(wbs_cyc_i),       // wishbone transaction
+    .i_wb_stb(wbs_stb_i),       // strobe - data valid and accepted as long as !o_wb_stall
+    .i_wb_we(wbs_we_i),        // write enable
+    .i_wb_addr(wbs_adr_i),      // address
+    .i_wb_data(wbs_dat_i),      // incoming data
+    .o_wb_ack(wbs_ack_o),       // request is completed 
+    .o_wb_data(wbs_dat_o),      // output data
 
-    // MGMT SoC Wishbone Slave
+    // buttons
+    .buttons(io_in[9:7]),
+    .leds(io_out[17:10]),
+    .led_enb(io_oeb[17:10])
 
-    .wbs_cyc_i(wbs_cyc_i),
-    .wbs_stb_i(wbs_stb_i),
-    .wbs_we_i(wbs_we_i),
-    .wbs_sel_i(wbs_sel_i),
-    .wbs_adr_i(wbs_adr_i),
-    .wbs_dat_i(wbs_dat_i),
-    .wbs_ack_o(wbs_ack_o),
-    .wbs_dat_o(wbs_dat_o),
+    );
 
-    // Logic Analyzer
-
-    .la_data_in(la_data_in),
-    .la_data_out(la_data_out),
-    .la_oenb (la_oenb),
-
-    // IO Pads
-
-    .io_in ({io_in[37:30],io_in[7:0]}),
-    .io_out({io_out[37:30],io_out[7:0]}),
-    .io_oeb({io_oeb[37:30],io_oeb[7:0]}),
-
-    // IRQ
-    .irq(user_irq)
-);
 
 endmodule	// user_project_wrapper
 
