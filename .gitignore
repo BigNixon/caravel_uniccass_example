@@ -1,8 +1,8 @@
 /.idea/
-/precheck_results/
+# /precheck_results/
 */tmp
 */*/tmp
-*.hex*
-*.lst
-*.vcd
-*.gtkw
+# *.hex*
+# *.lst
+# *.vcd
+# *.gtkw

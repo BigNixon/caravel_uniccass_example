@@ -21,9 +21,11 @@
 // #include "verilog/dv/caravel/defs.h"
 // #include "verilog/dv/caravel/stub.c"
 
-#define reg_wb_leds (*(volatile uint32_t*)0x30000000)
+#define reg_wb_suma (*(volatile uint32_t*)0x30000000)
 #define reg_wb_buttons (*(volatile uint32_t*)0x30000004)
-
+#define reg_wb_salidas (*(volatile uint32_t*)0x30000008)
+#define reg_wb_sumb (*(volatile uint32_t*)0x3000000C)
+#define reg_wb_op (*(volatile uint32_t*)0x30000010)
 /*
 	Wishbone Test:
 		- Configures MPRJ lower 8-IO pins as outputs
@@ -93,6 +95,26 @@ void main()
     while(reg_wb_buttons != 7);
 
     //the set all the leds signaling the end of the test
-    reg_wb_leds = 0xFF;
+    //reg_wb_leds = 0x5;
+    //reg_wb_leds = 0x6;
 
+    reg_wb_op = 0x0;
+    reg_wb_suma = 0x05134518;
+    reg_wb_sumb = 0x00000004;
+    while(reg_wb_salidas != 0xFAECBAE7); // op = 0
+    reg_wb_op = 0x1;
+    while(reg_wb_salidas != 0x00000000); // op = 1
+    reg_wb_op = 0x2;
+    while(reg_wb_salidas != 0x05134518); // op = 2
+    reg_wb_op = 0x3;
+    while(reg_wb_salidas != 0x0513451C); // op = 3
+    reg_wb_op = 0x4;
+    while(reg_wb_salidas != 0x05134517); // op = 4
+    reg_wb_op = 0x5;
+    while(reg_wb_salidas != 0x0513451C); // op = 5
+    reg_wb_op = 0x6;
+    while(reg_wb_salidas != 0x05134514); // op = 6
+    reg_wb_op = 0x7;
+    while(reg_wb_salidas != 0x05134519); // op = 7
+    reg_wb_suma = 0xD;
 }
