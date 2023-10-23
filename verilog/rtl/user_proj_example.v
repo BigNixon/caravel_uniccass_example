@@ -61,103 +61,38 @@ module user_proj_example #(
     input  [127:0] la_oenb,
 
     // IOs
-    input  [15:0] io_in,
-    output [15:0] io_out,
-    output [15:0] io_oeb,
+    input  [`MPRJ_IO_PADS-1:0] io_in,
+    output [`MPRJ_IO_PADS-1:0] io_out,
+    output [`MPRJ_IO_PADS-1:0] io_oeb,
 
     // IRQ
     output [2:0] irq
 );
-    wire clk;
-    wire rst;
 
-    wire [15:0] io_in;
-    wire [15:0] io_out;
-    wire [15:0] io_oeb;
+    
+wb_buttons_leds wb_buttons_leds(
+`ifdef USE_POWER_PINS
+    .vccd1(vccd1),
+    .vssd1(vssd1),
+`endif
+    .clk(wb_clk_i),
+    .reset(wb_rst_i),
 
-    wire [15:0] rdata; 
-    wire [15:0] wdata;
-    wire [15:0] count;
+    // wb interface
+    .i_wb_cyc(wbs_cyc_i),       // wishbone transaction
+    .i_wb_stb(wbs_stb_i),       // strobe - data valid and accepted as long as !o_wb_stall
+    .i_wb_we(wbs_we_i),        // write enable
+    .i_wb_addr(wbs_adr_i),      // address
+    .i_wb_data(wbs_dat_i),      // incoming data
+    .o_wb_ack(wbs_ack_o),       // request is completed 
+    .o_wb_data(wbs_dat_o),      // output data
 
-    wire valid;
-    wire [3:0] wstrb;
-    wire [31:0] la_write;
+    // buttons
+    .buttons(io_in[7]),
+    .leds(io_out[21:10]),
+    .led_enb(io_oeb[21:10])
 
-    // WB MI A
-    assign valid = wbs_cyc_i && wbs_stb_i; 
-    assign wstrb = wbs_sel_i & {4{wbs_we_i}};
-    assign wbs_dat_o = rdata;
-    assign wdata = wbs_dat_i[15:0];
-
-    // IO
-    assign io_out = count;
-    assign io_oeb = {(15){rst}};
-
-    // IRQ
-    assign irq = 3'b000;	// Unused
-
-    // LA
-    assign la_data_out = {{(127-BITS){1'b0}}, count};
-    // Assuming LA probes [63:32] are for controlling the count register  
-    assign la_write = ~la_oenb[63:32] & ~{BITS{valid}};
-    // Assuming LA probes [65:64] are for controlling the count clk & reset  
-    assign clk = (~la_oenb[64]) ? la_data_in[64]: wb_clk_i;
-    assign rst = (~la_oenb[65]) ? la_data_in[65]: wb_rst_i;
-
-    counter #(
-        .BITS(BITS)
-    ) counter(
-        .clk(clk),
-        .reset(rst),
-        .ready(wbs_ack_o),
-        .valid(valid),
-        .rdata(rdata),
-        .wdata(wbs_dat_i),
-        .wstrb(wstrb),
-        .la_write(la_write),
-        .la_input(la_data_in[63:32]),
-        .count(count)
-    );
-
-endmodule
-
-module counter #(
-    parameter BITS = 32
-)(
-    input clk,
-    input reset,
-    input valid,
-    input [3:0] wstrb,
-    input [15:0] wdata,
-    input [BITS-1:0] la_write,
-    input [BITS-1:0] la_input,
-    output ready,
-    output [15:0] rdata,
-    output [15:0] count
-);
-    reg ready;
-    reg [15:0] count;
-    reg [15:0] rdata;
-
-    always @(posedge clk) begin
-        if (reset) begin
-            count <= 0;
-            ready <= 0;
-        end else begin
-            ready <= 1'b0;
-            if (~|la_write) begin
-                count <= count + 1;
-            end
-            if (valid && !ready) begin
-                ready <= 1'b1;
-                rdata <= count;
-                if (wstrb[0]) count[7:0]   <= wdata[7:0];
-                if (wstrb[1]) count[15:8]  <= wdata[15:8];
-            end else if (|la_write) begin
-                count <= la_write & la_input;
-            end
-        end
-    end
+    );    
 
 endmodule
 `default_nettype wire

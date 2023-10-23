@@ -26,17 +26,12 @@ module wb_buttons_leds_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	// wire [7:0] mprj_io_0;
-	// wire [15:0] checkbits;
-	wire [7:0] leds;
-	reg [2:0] buttons = 0;
+	wire [3:0] leds,sumb;
+	reg buttons = 0;
 
-	// assign checkbits = mprj_io[31:16];
+	assign mprj_io[7] = buttons;
+	assign leds = mprj_io[13:10];
 
-	// assign mprj_io[3] = 1'b1;
-
-	assign mprj_io[9:7] = buttons;
-	assign leds = mprj_io[17:10];
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
@@ -163,27 +158,15 @@ module wb_buttons_leds_tb;
 	end
 
 	initial begin
-		buttons = 3'b111;
-		$display("LEDS STATUS:");#5 $display(leds);
-		$display("LEDS STATUS:");#5 $display(leds);
-		$display("LEDS STATUS:");#5 $display(leds);
-		$display("LEDS STATUS:");#5 $display(leds);
-		
-		#5 $display(leds);
-		wait(leds==8'b11111111);
+		buttons = 1'b1;
+		$display("Paso boton 5");
+		wait(leds==4'b1101);
+		$display("Paso leds D");
 		`ifdef GL
 			$display("Monitor: Test 1 mega project IO GL passed");
 		`else
 			$display("Monitor: Test 1 mega project IO RTL passed");
 		`endif
-	//    wait(checkbits == 16'hAB60);
-	// 	$display("Monitor: MPRJ-Logic WB Started");
-	// 	wait(checkbits == 16'hAB61);
-	// 	`ifdef GL
-	//     	$display("Monitor: Mega-Project WB (GL) Passed");
-	// 	`else
-	// 	    $display("Monitor: Mega-Project WB (RTL) Passed");
-	// 	`endif
 	    $finish;
 	end
 
