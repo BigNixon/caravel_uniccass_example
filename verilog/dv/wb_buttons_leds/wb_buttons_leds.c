@@ -76,10 +76,17 @@ void main()
     reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_16 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_17 = GPIO_MODE_USER_STD_OUTPUT;
+<<<<<<< HEAD
     // reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT;
     // reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT;
     // reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT;
     // reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT;
+=======
+    reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT;
+>>>>>>> 469f40a
     
      /* Apply configuration */
     reg_mprj_xfer = 1;
@@ -114,6 +121,7 @@ void main()
     reg_wb_op = 0x7;
     while(reg_wb_salidas2 != 0x00000000); // op = 7
     while(reg_wb_salidas != 0x05134519); // op = 7
+<<<<<<< HEAD
     // reg_wb_op = 0x8;
     // while(reg_wb_salidas2 != 0x00000013); // op = 8
     // while(reg_wb_salidas != 0xD345E5C0); // op = 8
@@ -128,5 +136,21 @@ void main()
     // reg_wb_sumb = 0x0000000A;
     // while(reg_wb_salidas2 != 0x00000000); // op = 8
     // while(reg_wb_salidas != 0x000144D1); // op = 8
+=======
+    reg_wb_op = 0x8;
+    while(reg_wb_salidas2 != 0x00000013); // op = 8
+    while(reg_wb_salidas != 0xD345E5C0); // op = 8
+    reg_wb_op = 0x9;
+    while(reg_wb_salidas2 != 0x00000000); // op = 8
+    while(reg_wb_salidas != 0x05134900); // op = 8
+    reg_wb_op = 0xA;
+    reg_wb_sumb = 0x0000000A;
+    while(reg_wb_salidas2 != 0x00000014); // op = 8
+    while(reg_wb_salidas != 0x4D146000); // op = 8
+    reg_wb_op = 0xB;
+    reg_wb_sumb = 0x0000000A;
+    while(reg_wb_salidas2 != 0x00000000); // op = 8
+    while(reg_wb_salidas != 0x000144D1); // op = 8
+>>>>>>> 469f40a
     reg_wb_suma = 0xD;
 }

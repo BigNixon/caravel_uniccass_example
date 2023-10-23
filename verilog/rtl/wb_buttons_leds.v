@@ -61,8 +61,13 @@ module wb_buttons_leds #(
     output reg  [31:0]  o_wb_data,      // output data
 
     input wire  buttons,
+<<<<<<< HEAD
     output wire [7:0] led_enb,
     output reg [3:0] leds
+=======
+    output wire [11:0] led_enb,
+    output reg [11:0] leds
+>>>>>>> 469f40a
  
     );
 
@@ -121,6 +126,7 @@ module wb_buttons_leds #(
                 salida[63:33]= 31'b0;
                 salida[32:0] = sum_a + 1;
             end
+<<<<<<< HEAD
             // 4'b1000:
             //     salida = sum_a*sum_b;
             // 4'b1001: begin
@@ -131,6 +137,18 @@ module wb_buttons_leds #(
             //     salida = {32'b0,sum_a} << sum_b;
             // 4'b1011:
             //     salida = {32'b0,sum_a} >> sum_b;
+=======
+            4'b1000:
+                salida = sum_a*sum_b;
+            4'b1001: begin
+                salida[63:33]= 31'b0;
+                salida[32:0] = s_cla;
+            end
+            4'b1010:
+                salida = {32'b0,sum_a} << sum_b;
+            4'b1011:
+                salida = {32'b0,sum_a} >> sum_b;
+>>>>>>> 469f40a
             default: 
                 salida = 'b0;
         endcase
@@ -148,8 +166,13 @@ module wb_buttons_leds #(
             op_code <= i_wb_data[3:0];
         end
         leds[3:0] <= sum_a[3:0];
+<<<<<<< HEAD
         // leds[7:4] <= salida[3:0];
         // leds[11:8] <= op_code[3:0];
+=======
+        leds[7:4] <= salida[3:0];
+        leds[11:8] <= op_code[3:0];
+>>>>>>> 469f40a
     end
 
     always @(posedge clk) begin

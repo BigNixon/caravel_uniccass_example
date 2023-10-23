@@ -1,7 +1,11 @@
 magic
 tech sky130A
 magscale 1 2
+<<<<<<< HEAD
 timestamp 1697744010
+=======
+timestamp 1698090949
+>>>>>>> 469f40a
 << metal1 >>
 rect 59170 2864 59176 2916
 rect 59228 2904 59234 2916

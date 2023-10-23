@@ -1,7 +1,11 @@
 (DELAYFILE
  (SDFVERSION "3.0")
  (DESIGN "user_project_wrapper")
+<<<<<<< HEAD
  (DATE "Thu Oct 19 19:33:21 2023")
+=======
+ (DATE "Mon Oct 23 19:55:41 2023")
+>>>>>>> 469f40a
  (VENDOR "Parallax")
  (PROGRAM "STA")
  (VERSION "2.3.3")
