@@ -88,7 +88,7 @@ wb_buttons_leds wb_buttons_leds(
     .o_wb_data(wbs_dat_o),      // output data
 
     // buttons
-    .buttons(io_in[9:7]),
+    .buttons(io_in[7]),
     .leds(io_out[13:10]),
     .led_enb(io_oeb[17:10])
 
