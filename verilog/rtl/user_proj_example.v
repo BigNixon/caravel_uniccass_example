@@ -89,13 +89,8 @@ wb_buttons_leds wb_buttons_leds(
 
     // buttons
     .buttons(io_in[7]),
-<<<<<<< HEAD
     .leds(io_out[13:10]),
     .led_enb(io_oeb[17:10])
-=======
-    .leds(io_out[21:10]),
-    .led_enb(io_oeb[21:10])
->>>>>>> 469f40a
 
     );    
 

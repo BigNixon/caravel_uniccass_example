@@ -64,8 +64,8 @@ void main()
 
     //buttons as input to testbench
     reg_mprj_io_7 = GPIO_MODE_USER_STD_INPUT_NOPULL;
-    reg_mprj_io_8 = GPIO_MODE_USER_STD_INPUT_NOPULL;
-    reg_mprj_io_9 = GPIO_MODE_USER_STD_INPUT_NOPULL;
+    // reg_mprj_io_8 = GPIO_MODE_USER_STD_INPUT_NOPULL;
+    // reg_mprj_io_9 = GPIO_MODE_USER_STD_INPUT_NOPULL;
 
     //leds as output to testbench
     reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
