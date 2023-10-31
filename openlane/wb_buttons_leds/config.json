@@ -5,7 +5,7 @@
         "dir::../../verilog/rtl/defines.v",
         "dir::../../verilog/rtl/wb_buttons_leds.v"
     ],
-    "CLOCK_PERIOD": 25,
+    "CLOCK_PERIOD": 40,
     "CLOCK_PORT": "clk",
     "CLOCK_NET": "clk",
     "FP_SIZING": "absolute",
